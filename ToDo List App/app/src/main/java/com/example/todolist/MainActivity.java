@@ -46,10 +46,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent intent = new Intent(this, AddItem.class);
                 startActivityForResult(intent,1);
                 break;
-            case R.id.submit_task_btn:
-                  //Displays text after something has finished
-                break;
-
         }
     }
 
@@ -57,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         tasks.remove(position);
         adapter.notifyDataSetChanged();
+        FileHelper.writeData(tasks, this, true);
         Toast.makeText(this,"Delete", Toast.LENGTH_SHORT).show();
     }
 
@@ -67,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if(resultCode == RESULT_OK){
                 String itemEntered = data.getStringExtra("editTextValue");
                 adapter.add(itemEntered);
-                FileHelper.writeData(tasks, this);
+                FileHelper.writeData(tasks, this, false);
                 Toast.makeText(this, "Item Added", Toast.LENGTH_SHORT).show();
             }
         }

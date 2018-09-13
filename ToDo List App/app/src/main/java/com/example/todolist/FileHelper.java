@@ -15,9 +15,15 @@ public class FileHelper {
 
     public static final String FILENAME = "listinfo.dat";
 
-    public static void writeData(ArrayList<String> tasks, Context context){
+    public static void writeData(ArrayList<String> tasks, Context context, boolean rewrite){
         try {
-            FileOutputStream fos = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
+            FileOutputStream fos;
+            if (!rewrite){
+                fos = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
+            }
+            else{
+                fos = new FileOutputStream(FILENAME, false);
+            }
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(tasks);
             oos.close();
