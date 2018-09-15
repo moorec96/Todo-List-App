@@ -13,6 +13,7 @@ public class AddItem extends Activity implements View.OnClickListener {
 
     private Button enterTaskBtn;
     private EditText currentTask;
+    private EditText currentPriority;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,6 +32,7 @@ public class AddItem extends Activity implements View.OnClickListener {
         enterTaskBtn = findViewById(R.id.submit_task_btn);
         enterTaskBtn.setOnClickListener(this);
         currentTask = findViewById(R.id.enter_item_field);
+        currentPriority = findViewById(R.id.priority_view);
     }
 
     @Override
@@ -39,6 +41,7 @@ public class AddItem extends Activity implements View.OnClickListener {
             case R.id.submit_task_btn:
                 Intent intent = new Intent();
                 intent.putExtra("editTextValue",currentTask.getText().toString() );
+                intent.putExtra("priorityValue",currentPriority.getText().toString());
                 setResult(RESULT_OK,intent);
                 currentTask.setText("");
                 finish();

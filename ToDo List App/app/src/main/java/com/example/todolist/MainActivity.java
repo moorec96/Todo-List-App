@@ -1,6 +1,7 @@
 package com.example.todolist;
 
 import android.content.Intent;
+import android.graphics.drawable.GradientDrawable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -30,13 +31,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         itemsList = findViewById(R.id.items_list);
         tasks = FileHelper.readData(this);
 
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, tasks);
+        adapter = new ArrayAdapter<String>(this, R.layout.task,R.id.task_textView, tasks);
         itemsList.setAdapter(adapter);
 
         addItemBtn.setOnClickListener(this);
         itemsList.setOnItemClickListener(this);
-
-
     }
 
     @Override
@@ -53,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         tasks.remove(position);
         adapter.notifyDataSetChanged();
-        FileHelper.writeData(tasks, this, true);
+        FileHelper.writeData(tasks, this);
         Toast.makeText(this,"Delete", Toast.LENGTH_SHORT).show();
     }
 
@@ -64,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if(resultCode == RESULT_OK){
                 String itemEntered = data.getStringExtra("editTextValue");
                 adapter.add(itemEntered);
-                FileHelper.writeData(tasks, this, false);
+                FileHelper.writeData(tasks, this);
                 Toast.makeText(this, "Item Added", Toast.LENGTH_SHORT).show();
             }
         }
