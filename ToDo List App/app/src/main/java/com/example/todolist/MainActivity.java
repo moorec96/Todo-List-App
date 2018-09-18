@@ -19,8 +19,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FloatingActionButton addItemBtn;
     private ListView itemsList;
 
-    private ArrayList<String> tasks;
-    private ArrayAdapter<String> adapter;   //Android studio uses this to help fill in lists
+    private Tasks tasks;
+    private TaskAdapter adapter;   //Android studio uses this to help fill in lists
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +32,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         itemsList = findViewById(R.id.items_list);
         tasks = FileHelper.readData(this);
 
-        adapter = new ArrayAdapter<String>(this, R.layout.task,R.id.task_textView, tasks);
+        adapter = new TaskAdapter(this, tasks.tasks, tasks.priorities);
         itemsList.setAdapter(adapter);
+
 
         addItemBtn.setOnClickListener(this);
         itemsList.setOnItemClickListener(this);
@@ -50,7 +52,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        tasks.remove(position);
+        tasks.tasks.remove(position);
+        tasks.priorities.remove(position);
         adapter.notifyDataSetChanged();
         FileHelper.writeData(tasks, this);
         Toast.makeText(this,"Delete", Toast.LENGTH_SHORT).show();
@@ -62,7 +65,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(requestCode == 1){
             if(resultCode == RESULT_OK){
                 String itemEntered = data.getStringExtra("editTextValue");
-                adapter.add(itemEntered);
+                int priority = Integer.parseInt(data.getStringExtra("priorityValue"));
+                adapter.tasks.add(itemEntered);
+                adapter.priorities.add(priority);
                 FileHelper.writeData(tasks, this);
                 Toast.makeText(this, "Item Added", Toast.LENGTH_SHORT).show();
             }

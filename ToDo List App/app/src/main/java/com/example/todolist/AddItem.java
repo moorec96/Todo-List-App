@@ -41,7 +41,7 @@ public class AddItem extends Activity implements View.OnClickListener {
             case R.id.submit_task_btn:
                 Intent intent = new Intent();
                 intent.putExtra("editTextValue",currentTask.getText().toString() );
-                intent.putExtra("priorityValue",currentPriority.getText().toString());
+                intent.putExtra("priorityValue", currentPriority.getText().toString());
                 setResult(RESULT_OK,intent);
                 currentTask.setText("");
                 finish();

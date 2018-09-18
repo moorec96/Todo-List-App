@@ -15,7 +15,7 @@ public class FileHelper {
 
     public static final String FILENAME = "listinfo.dat";
 
-    public static void writeData(ArrayList<String> tasks, Context context){
+    public static void writeData(Tasks tasks, Context context){
         try {
             FileOutputStream fos;
             fos = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
@@ -30,20 +30,20 @@ public class FileHelper {
         }
     }
 
-    public static ArrayList<String> readData(Context context) {
-        ArrayList<String> taskList = null;
+    public static Tasks readData(Context context) {
+        Tasks tasks = null;
         try {
             FileInputStream fis = context.openFileInput(FILENAME);
             ObjectInputStream ois = new ObjectInputStream(fis);
-            taskList = (ArrayList<String>) ois.readObject();
+            tasks = (Tasks) ois.readObject();
         } catch (FileNotFoundException e) {
-            taskList = new ArrayList<>();
+            tasks = new Tasks();
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return taskList;
+        return tasks;
     }
 }
