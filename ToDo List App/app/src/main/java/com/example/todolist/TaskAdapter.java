@@ -32,7 +32,7 @@ public class TaskAdapter extends ArrayAdapter<String> {
             taskText.setText(tasks.get(position));
         }
         if(priorities!= null) {
-            priority.setText(priorities.get(position));
+            priority.setText("Priority: " + priorities.get(position).toString());
         }
         return taskView;
     }

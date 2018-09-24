@@ -65,9 +65,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(requestCode == 1){
             if(resultCode == RESULT_OK){
                 String itemEntered = data.getStringExtra("editTextValue");
-                int priority = Integer.parseInt(data.getStringExtra("priorityValue"));
+                Integer priority = Integer.parseInt(data.getStringExtra("priorityValue"));
                 adapter.tasks.add(itemEntered);
                 adapter.priorities.add(priority);
+                adapter.notifyDataSetChanged();
                 FileHelper.writeData(tasks, this);
                 Toast.makeText(this, "Item Added", Toast.LENGTH_SHORT).show();
             }
